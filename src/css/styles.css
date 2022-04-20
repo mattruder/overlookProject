@@ -1,3 +1,28 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #E8E8E8
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-right {
+  display: flex;
+  flex-direction:row;
+}
+
+.hidden {
+  display: none;
+}
+
+#date-selection {
+  font-size: 20px;
 }
