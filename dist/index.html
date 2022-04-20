@@ -8,20 +8,32 @@
 </head>
 <header>
   <section class="header-left">
-    <h1>Overlook</h1>
-    <p>Welcome, User!</p>
   </section>
   <section class="header-right">
     <h2>Book A Room</h2>
     <label for="date-selection">Date:</label>
-    <input type="date" id="date-selection" name="trip-start"
+    <input type="date" id="date-selection" name="calendar"
        value=""
-       min="2022-04-19" max="2030-12-31">
+       min="" max="2030-12-31">
       <button class="search-availability">Search</button>
   </section>
 </header>
 <body>
+  <section class="total-spent-area">
+
+  </section>
   <section class="my-bookings-area">
+    <section class="past-bookings-area">
+      <h2>My Past Bookings</h2>
+      <div class="past-bookings scroll">
+      </div>
+    </section>
+    <section class="future-bookings-area">
+      <h2>My Future Bookings</h2>
+      <div class="future-bookings scroll">
+        <h2 class="">No Future Bookings</h2>
+      </div>
+    </section>
 
   </section>
 

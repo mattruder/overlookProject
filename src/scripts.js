@@ -8,6 +8,9 @@ import getData from './apiCalls'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Customer from './classes/Customer'
+import domUpdates from './domUpdates.js'
+const myBookingsArea = document.querySelector('.my-bookings-area')
+const totalSpentArea = document.querySelector('.total-spent-area')
 
 let customerData;
 let roomsData;
@@ -18,11 +21,16 @@ getData().then(data => {
   customerData = data[0].customers;
   roomsData = data[1].rooms;
   bookingsData = data[2].bookings;
-  customer = new Customer(customerData[0])
+  customer = new Customer(customerData[domUpdates.getRandomIndex(customerData)])
   customer.getBookings(bookingsData)
+  customer.getRooms(roomsData)
+  customer.getTotalSpent()
+  domUpdates.populateTotalSpentArea(customer)
+  domUpdates.populateHeader(customer)
+  domUpdates.displayPastBookings(customer, roomsData)
+  domUpdates.setDateSelection()
   console.log("customer data ", customerData)
   console.log("rooms data ", roomsData)
   console.log("bookings data ", bookingsData)
   console.log(customer)
-
 })

@@ -3,24 +3,38 @@ class Customer {
     this.id = customerInfo.id;
     this.name = customerInfo.name;
     this.bookings = [];
+    this.rooms = [];
     this.totalSpent = 0;
   }
 
-  getTotalSpent(rooms) {
-    rooms.forEach((room) => {
+  getTotalSpent() {
+    this.rooms.forEach((room) => {
       this.totalSpent += room.costPerNight;
     })
-    return Number(this.totalSpent.toFixed(2))
+
+    this.totalSpent = Number(this.totalSpent.toFixed(2))
+
+    return this.totalSpent
   }
 
-  getBookings(bookingsData){
+  getBookings(bookingsData) {
     bookingsData.forEach((booking) => {
       if(this.id === booking.userID) {
         this.bookings.push(booking)
       }
     })
-
     return this.bookings
+  }
+
+  getRooms(roomsData) {
+    this.bookings.forEach((booking) => {
+      roomsData.forEach((room) => {
+        if(booking.roomNumber === room.number) {
+          this.rooms.push(room)
+        }
+      })
+    })
+    return this.rooms
   }
 
 }
