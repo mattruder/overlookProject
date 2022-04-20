@@ -29,3 +29,5 @@ const fetchBookingsData = () => {
     .then(response => response.json())
     .catch(err => console.log('ERROR'))
 }
+
+export default getData
