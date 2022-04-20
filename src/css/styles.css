@@ -26,3 +26,36 @@ header {
 #date-selection {
   font-size: 20px;
 }
+
+.my-bookings-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center
+}
+
+.total-spent-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+
+}
+
+.scroll {
+  border: 2px solid black;
+  margin:4px, 4px;
+  padding:4px;
+  width: 500px;
+  height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align:justify;
+}
+
+.future-bookings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
