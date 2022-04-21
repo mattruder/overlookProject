@@ -9,6 +9,11 @@ header {
   background-color: #E8E8E8
 }
 
+button, .go-home-btn {
+  cursor: pointer;
+}
+
+
 .header-left {
   display: flex;
   flex-direction: column;
@@ -42,12 +47,31 @@ header {
 
 }
 
+.room-search-styling {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  
+}
+
 .scroll {
   border: 2px solid black;
   margin:4px, 4px;
   padding:4px;
   width: 500px;
   height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align:justify;
+}
+
+.scroll-availability {
+  border: 2px solid black;
+  margin:4px, 4px;
+  padding:4px;
+  width: 500px;
+  height: 600px;
   overflow-x: hidden;
   overflow-y: auto;
   text-align:justify;

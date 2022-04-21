@@ -11,6 +11,12 @@ import Customer from './classes/Customer'
 import domUpdates from './domUpdates.js'
 const myBookingsArea = document.querySelector('.my-bookings-area')
 const totalSpentArea = document.querySelector('.total-spent-area')
+const searchRoomsBtn = document.querySelector('.search-availability')
+const roomSearchDisplay = document.querySelector('.room-search-display')
+const goHomeBtn = document.querySelector('.go-home-btn')
+const roomTypeDropdown = document.getElementById("room-type-dropdown")
+const filterRoomsBtn = document.querySelector('.filter-rooms')
+
 
 let customerData;
 let roomsData;
@@ -33,4 +39,17 @@ getData().then(data => {
   console.log("rooms data ", roomsData)
   console.log("bookings data ", bookingsData)
   console.log(customer)
+})
+
+searchRoomsBtn.addEventListener("click", () => {
+  domUpdates.displayResultsArea()
+  domUpdates.displaySearchResults(roomsData, bookingsData)
+});
+
+goHomeBtn.addEventListener("click", () => {
+  domUpdates.goHome()
+})
+
+filterRoomsBtn.addEventListener("click", () => {
+  domUpdates.filterRooms(roomsData, bookingsData)
 })

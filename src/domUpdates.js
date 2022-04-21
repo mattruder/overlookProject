@@ -4,6 +4,10 @@ const totalSpentArea = document.querySelector('.total-spent-area')
 const headerLeft = document.querySelector('.header-left')
 const pastBookings = document.querySelector('.past-bookings')
 const dateSelection = document.getElementById("date-selection")
+const roomSearchDisplay = document.querySelector('.room-search-display')
+const mainDashboardBody = document.querySelector('.main-dashboard-body')
+const availableRoomsArea = document.querySelector('.available-rooms')
+const roomTypeDropdown = document.getElementById("room-type-dropdown")
 
 let domUpdates = {
 
@@ -20,13 +24,8 @@ let domUpdates = {
 
   populateHeader(customer) {
     headerLeft.innerHTML += `
-    <h1>Overlook Hotel</h1>
     <p>Welcome, ${customer.name}!</p>
     `
-  },
-
-  sortBookings(customer, roomsData) {
-
   },
 
   displayPastBookings(customer, roomsData) {
@@ -61,7 +60,7 @@ let domUpdates = {
         <p>Room Type: ${sortedBooking.roomType}</p>
         <p>Bed Size: ${sortedBooking.bedSize}</p>
         <p>Beds: ${sortedBooking.numBeds}</p>
-        <p>Cost Per Night: ${sortedBooking.cost}</p>
+        <p>Cost Per Night: $${sortedBooking.cost}</p>
       </div>
       `
     })
@@ -70,17 +69,110 @@ let domUpdates = {
   setDateSelection() {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     today = `${yyyy}-${mm}-${dd}`;
     dateSelection.min = today
-  }
+    dateSelection.value = today
+  },
 
+  displayResultsArea() {
+    this.addHidden([mainDashboardBody]);
+    this.removeHidden([roomSearchDisplay])
+  },
 
+  displaySearchResults(roomsData, bookingsData) {
+    availableRoomsArea.innerHTML = ''
+    let searchDate = new Date(dateSelection.value)
+    let dd = String(searchDate.getDate()).padStart(2, '0');
+    let mm = String(searchDate.getMonth() + 1).padStart(2, '0');
+    let yyyy = searchDate.getFullYear();
+    searchDate = `${yyyy}/${mm}/${dd}`;
+    roomsData.forEach((room) => {
+      let roomInfoObject = {}
+      bookingsData.forEach((booking) => {
 
+        if(booking.roomNumber === room.number && searchDate !== booking.date) {
+          roomInfoObject['roomNumber'] = room.number
+          roomInfoObject['roomType'] = room.roomType
+          roomInfoObject['bedSize'] = room.bedSize
+          roomInfoObject['cost'] = room.costPerNight
+          roomInfoObject['numBeds'] = room.numBeds
+        }
+      })
+      availableRoomsArea.innerHTML += `
+      <h3>Room ${roomInfoObject['roomNumber']}</h3>
+      <p>Room Type: ${roomInfoObject['roomType']}</p>
+      <p>Bed Size: ${roomInfoObject['bedSize']}</p>
+      <p>Beds: ${roomInfoObject['numBeds']}</p>
+      <p>Cost Per Night: ${roomInfoObject['cost']}</p>
+      <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
+      `
+    })
+  },
 
+  filterRooms(roomsData, bookingsData) {
+    availableRoomsArea.innerHTML = ''
+    let searchDate = new Date(dateSelection.value)
+    let dd = String(searchDate.getDate()).padStart(2, '0');
+    let mm = String(searchDate.getMonth() + 1).padStart(2, '0');
+    let yyyy = searchDate.getFullYear();
+    searchDate = `${yyyy}/${mm}/${dd}`;
+    let filterValue = roomTypeDropdown.value
+    roomsData.forEach((room) => {
+      let roomInfoObject = {}
+      bookingsData.forEach((booking) => {
 
+        if(booking.roomNumber === room.number && searchDate !== booking.date) {
+          if(room.roomType === filterValue) {
+          roomInfoObject['roomNumber'] = room.number
+          roomInfoObject['roomType'] = room.roomType
+          roomInfoObject['bedSize'] = room.bedSize
+          roomInfoObject['cost'] = room.costPerNight
+          roomInfoObject['numBeds'] = room.numBeds
+        } else if(filterValue === "all") {
+          roomInfoObject['roomNumber'] = room.number
+          roomInfoObject['roomType'] = room.roomType
+          roomInfoObject['bedSize'] = room.bedSize
+          roomInfoObject['cost'] = room.costPerNight
+          roomInfoObject['numBeds'] = room.numBeds
+        }
+        }
+      })
+      if(roomInfoObject['roomType'] !== undefined) {
+      availableRoomsArea.innerHTML += `
+      <h3>Room ${roomInfoObject['roomNumber']}</h3>
+      <p>Room Type: ${roomInfoObject['roomType']}</p>
+      <p>Bed Size: ${roomInfoObject['bedSize']}</p>
+      <p>Beds: ${roomInfoObject['numBeds']}</p>
+      <p>Cost Per Night: ${roomInfoObject['cost']}</p>
+      <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
+      `
+    }
+    })
+  },
 
+  displayFilteredRooms() {
+
+  },
+
+  goHome() {
+    this.removeHidden([mainDashboardBody]);
+    this.addHidden([roomSearchDisplay])
+    this.setDateSelection()
+  },
+
+  removeHidden(array) {
+  array.forEach((element) => {
+    element.classList.remove("hidden")
+  })
+},
+
+  addHidden(array) {
+  array.forEach((element) => {
+    element.classList.add("hidden")
+  })
+}
 
 }
 
