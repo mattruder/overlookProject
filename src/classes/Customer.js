@@ -8,6 +8,7 @@ class Customer {
   }
 
   getTotalSpent() {
+    this.totalSpent = 0;
     this.rooms.forEach((room) => {
       this.totalSpent += room.costPerNight;
     })
@@ -18,6 +19,7 @@ class Customer {
   }
 
   getBookings(bookingsData) {
+    this.bookings = []
     bookingsData.forEach((booking) => {
       if(this.id === booking.userID) {
         this.bookings.push(booking)
@@ -27,6 +29,7 @@ class Customer {
   }
 
   getRooms(roomsData) {
+    this.rooms = []
     this.bookings.forEach((booking) => {
       roomsData.forEach((room) => {
         if(booking.roomNumber === room.number) {
