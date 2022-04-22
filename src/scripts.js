@@ -50,6 +50,22 @@ searchRoomsBtn.addEventListener("click", () => {
 
 goHomeBtn.addEventListener("click", () => {
   domUpdates.goHome()
+  getData().then(data => {
+    roomsData = data[1].rooms;
+    bookingsData = data[2].bookings;
+    customer.getBookings(bookingsData)
+    customer.getRooms(roomsData)
+    customer.getTotalSpent()
+    domUpdates.populateTotalSpentArea(customer)
+    domUpdates.displayPastBookings(customer, roomsData)
+    domUpdates.displayFutureBookings(customer, roomsData)
+    domUpdates.setDateSelection()
+    console.log("customer data ", customerData)
+    console.log("rooms data ", roomsData)
+    console.log("bookings data ", bookingsData)
+    console.log(customer)
+  })
+
 })
 
 filterRoomsBtn.addEventListener("click", () => {

@@ -17,6 +17,7 @@ let domUpdates = {
   },
 
   populateTotalSpentArea(customer) {
+    totalSpentArea.innerHTML = ""
     totalSpentArea.innerHTML += `
     <h3>You have spent $${customer.totalSpent} at Overlook Hotel</h3>
     <p>Thank you for being a valued customer!</p>
