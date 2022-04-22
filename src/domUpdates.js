@@ -83,23 +83,23 @@ let domUpdates = {
 
   displaySearchResults(roomsData, bookingsData) {
     availableRoomsArea.innerHTML = ''
-    let searchDate = new Date(dateSelection.value)
-    let dd = String(searchDate.getDate()).padStart(2, '0');
-    let mm = String(searchDate.getMonth() + 1).padStart(2, '0');
-    let yyyy = searchDate.getFullYear();
-    searchDate = `${yyyy}/${mm}/${dd}`;
+    let searchDate = dateSelection.value.replaceAll('-', '/')
     roomsData.forEach((room) => {
       let roomInfoObject = {}
-      bookingsData.forEach((booking) => {
 
-        if(booking.roomNumber === room.number && searchDate !== booking.date) {
-          roomInfoObject['roomNumber'] = room.number
-          roomInfoObject['roomType'] = room.roomType
-          roomInfoObject['bedSize'] = room.bedSize
-          roomInfoObject['cost'] = room.costPerNight
-          roomInfoObject['numBeds'] = room.numBeds
-        }
-      })
+          let isBooked = bookingsData.find((booking) => {
+            return booking.date === searchDate && booking.roomNumber === room.number
+          })
+
+          if(!isBooked) {
+            roomInfoObject['roomNumber'] = room.number
+            roomInfoObject['roomType'] = room.roomType
+            roomInfoObject['bedSize'] = room.bedSize
+            roomInfoObject['cost'] = room.costPerNight
+            roomInfoObject['numBeds'] = room.numBeds
+          }
+
+      if(roomInfoObject['roomNumber'] !== undefined) {
       availableRoomsArea.innerHTML += `
       <h3>Room ${roomInfoObject['roomNumber']}</h3>
       <p>Room Type: ${roomInfoObject['roomType']}</p>
@@ -108,37 +108,37 @@ let domUpdates = {
       <p>Cost Per Night: ${roomInfoObject['cost']}</p>
       <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
       `
+      }
+
     })
   },
 
   filterRooms(roomsData, bookingsData) {
     availableRoomsArea.innerHTML = ''
-    let searchDate = new Date(dateSelection.value)
-    let dd = String(searchDate.getDate()).padStart(2, '0');
-    let mm = String(searchDate.getMonth() + 1).padStart(2, '0');
-    let yyyy = searchDate.getFullYear();
-    searchDate = `${yyyy}/${mm}/${dd}`;
+    let searchDate = dateSelection.value.replaceAll('-', '/')
     let filterValue = roomTypeDropdown.value
     roomsData.forEach((room) => {
       let roomInfoObject = {}
-      bookingsData.forEach((booking) => {
 
-        if(booking.roomNumber === room.number && searchDate !== booking.date) {
-          if(room.roomType === filterValue) {
-          roomInfoObject['roomNumber'] = room.number
-          roomInfoObject['roomType'] = room.roomType
-          roomInfoObject['bedSize'] = room.bedSize
-          roomInfoObject['cost'] = room.costPerNight
-          roomInfoObject['numBeds'] = room.numBeds
-        } else if(filterValue === "all") {
-          roomInfoObject['roomNumber'] = room.number
-          roomInfoObject['roomType'] = room.roomType
-          roomInfoObject['bedSize'] = room.bedSize
-          roomInfoObject['cost'] = room.costPerNight
-          roomInfoObject['numBeds'] = room.numBeds
-        }
-        }
+      let isBooked = bookingsData.find((booking) => {
+        return booking.date === searchDate && booking.roomNumber === room.number
       })
+
+      if(!isBooked && room.roomType === filterValue) {
+        roomInfoObject['roomNumber'] = room.number
+        roomInfoObject['roomType'] = room.roomType
+        roomInfoObject['bedSize'] = room.bedSize
+        roomInfoObject['cost'] = room.costPerNight
+        roomInfoObject['numBeds'] = room.numBeds
+      } else if(!isBooked && filterValue === "all") {
+        roomInfoObject['roomNumber'] = room.number
+        roomInfoObject['roomType'] = room.roomType
+        roomInfoObject['bedSize'] = room.bedSize
+        roomInfoObject['cost'] = room.costPerNight
+        roomInfoObject['numBeds'] = room.numBeds
+      }
+
+
       if(roomInfoObject['roomType'] !== undefined) {
       availableRoomsArea.innerHTML += `
       <h3>Room ${roomInfoObject['roomNumber']}</h3>
@@ -152,9 +152,16 @@ let domUpdates = {
     })
   },
 
-  displayFilteredRooms() {
-
+  bookThisRoom(event, roomsData, customer) {
+    let searchDate = dateSelection.value.replaceAll('-', '/')
+    roomsData.forEach((room) => {
+      if(room.number.toString() === event.target.id.toString()) {
+      let roomBooking = { "userID": customer.id, "date": searchDate.toString(), "roomNumber": room.number}
+      this.bookRoom(roomBooking)
+      }
+    })
   },
+
 
   goHome() {
     this.removeHidden([mainDashboardBody]);
@@ -172,6 +179,18 @@ let domUpdates = {
   array.forEach((element) => {
     element.classList.add("hidden")
   })
+},
+
+bookRoom(roomToBook) {
+    fetch(`http://localhost:3001/api/v1/bookings`, {
+        method: 'POST',
+        body: JSON.stringify(roomToBook),
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .catch(err => console.log('ERROR'))
 }
 
 }

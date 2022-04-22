@@ -16,7 +16,8 @@ const roomSearchDisplay = document.querySelector('.room-search-display')
 const goHomeBtn = document.querySelector('.go-home-btn')
 const roomTypeDropdown = document.getElementById("room-type-dropdown")
 const filterRoomsBtn = document.querySelector('.filter-rooms')
-
+const bookRoomBtn = document.querySelector('.book-room-btn')
+const availableRoomsArea = document.querySelector('.available-rooms')
 
 let customerData;
 let roomsData;
@@ -52,4 +53,8 @@ goHomeBtn.addEventListener("click", () => {
 
 filterRoomsBtn.addEventListener("click", () => {
   domUpdates.filterRooms(roomsData, bookingsData)
+})
+
+availableRoomsArea.addEventListener("click", (event) => {
+  domUpdates.bookThisRoom(event, roomsData, customer)
 })
