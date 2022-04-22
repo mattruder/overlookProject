@@ -18,6 +18,7 @@ const roomTypeDropdown = document.getElementById("room-type-dropdown")
 const filterRoomsBtn = document.querySelector('.filter-rooms')
 const bookRoomBtn = document.querySelector('.book-room-btn')
 const availableRoomsArea = document.querySelector('.available-rooms')
+const goHomeFromSuccess = document.querySelector('.go-home-from-success')
 
 let customerData;
 let roomsData;
@@ -44,6 +45,16 @@ getData().then(data => {
 })
 
 searchRoomsBtn.addEventListener("click", () => {
+  getData().then(data => {
+    roomsData = data[1].rooms;
+    bookingsData = data[2].bookings;
+    customer.getBookings(bookingsData)
+    customer.getRooms(roomsData)
+    customer.getTotalSpent()
+    domUpdates.populateTotalSpentArea(customer)
+    domUpdates.displayPastBookings(customer, roomsData)
+    domUpdates.displayFutureBookings(customer, roomsData)
+  })
   domUpdates.displayResultsArea()
   domUpdates.displaySearchResults(roomsData, bookingsData)
 });
@@ -74,4 +85,24 @@ filterRoomsBtn.addEventListener("click", () => {
 
 availableRoomsArea.addEventListener("click", (event) => {
   domUpdates.bookThisRoom(event, roomsData, customer)
+  domUpdates.displaySuccessMessage()
+})
+
+goHomeFromSuccess.addEventListener("click", () => {
+  domUpdates.goHome()
+  getData().then(data => {
+    roomsData = data[1].rooms;
+    bookingsData = data[2].bookings;
+    customer.getBookings(bookingsData)
+    customer.getRooms(roomsData)
+    customer.getTotalSpent()
+    domUpdates.populateTotalSpentArea(customer)
+    domUpdates.displayPastBookings(customer, roomsData)
+    domUpdates.displayFutureBookings(customer, roomsData)
+    domUpdates.setDateSelection()
+    console.log("customer data ", customerData)
+    console.log("rooms data ", roomsData)
+    console.log("bookings data ", bookingsData)
+    console.log(customer)
+  })
 })

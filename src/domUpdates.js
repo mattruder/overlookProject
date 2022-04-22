@@ -9,6 +9,7 @@ const mainDashboardBody = document.querySelector('.main-dashboard-body')
 const availableRoomsArea = document.querySelector('.available-rooms')
 const roomTypeDropdown = document.getElementById("room-type-dropdown")
 const futureBookingsArea = document.querySelector('.future-bookings')
+const successMessageArea = document.querySelector('.room-is-booked-message')
 
 let domUpdates = {
 
@@ -63,6 +64,7 @@ let domUpdates = {
         <p>Bed Size: ${sortedBooking.bedSize}</p>
         <p>Beds: ${sortedBooking.numBeds}</p>
         <p>Cost Per Night: $${sortedBooking.cost}</p>
+        <hr style="width:100%", size="2", color=black>
       </div>
       `
     })
@@ -104,6 +106,7 @@ let domUpdates = {
         <p>Bed Size: ${sortedBooking.bedSize}</p>
         <p>Beds: ${sortedBooking.numBeds}</p>
         <p>Cost Per Night: $${sortedBooking.cost}</p>
+        <hr style="width:100%", size="2", color=black>
       </div>
       `
     })
@@ -120,15 +123,17 @@ let domUpdates = {
   },
 
   displayResultsArea() {
-    this.addHidden([mainDashboardBody]);
+    this.addHidden([mainDashboardBody, successMessageArea]);
     this.removeHidden([roomSearchDisplay])
   },
 
   displaySearchResults(roomsData, bookingsData) {
     availableRoomsArea.innerHTML = ''
+    let allAvailableRooms = []
     let searchDate = dateSelection.value.replaceAll('-', '/')
     roomsData.forEach((room) => {
       let roomInfoObject = {}
+
 
           let isBooked = bookingsData.find((booking) => {
             return booking.date === searchDate && booking.roomNumber === room.number
@@ -143,17 +148,27 @@ let domUpdates = {
           }
 
       if(roomInfoObject['roomNumber'] !== undefined) {
+      allAvailableRooms.push(roomInfoObject)
       availableRoomsArea.innerHTML += `
       <h3>Room ${roomInfoObject['roomNumber']}</h3>
       <p>Room Type: ${roomInfoObject['roomType']}</p>
       <p>Bed Size: ${roomInfoObject['bedSize']}</p>
       <p>Beds: ${roomInfoObject['numBeds']}</p>
-      <p>Cost Per Night: ${roomInfoObject['cost']}</p>
+      <p>Cost Per Night: $${roomInfoObject['cost']}</p>
       <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
+      <hr style="width:100%", size="2", color=black>
       `
       }
 
+
+
+
     })
+    if(allAvailableRooms.length === 0) {
+      availableRoomsArea.innerHTML += `
+      <h1>So Sorry! No rooms are available on this date. Please select another date</h1>
+      `
+    }
   },
 
   filterRooms(roomsData, bookingsData) {
@@ -208,7 +223,7 @@ let domUpdates = {
 
   goHome() {
     this.removeHidden([mainDashboardBody]);
-    this.addHidden([roomSearchDisplay])
+    this.addHidden([roomSearchDisplay, successMessageArea])
     this.setDateSelection()
   },
 
@@ -234,6 +249,11 @@ bookRoom(roomToBook) {
     })
     .then(response => response.json())
     .catch(err => console.log('ERROR'))
+},
+
+displaySuccessMessage() {
+  this.addHidden([roomSearchDisplay, mainDashboardBody])
+  this.removeHidden([successMessageArea])
 }
 
 }

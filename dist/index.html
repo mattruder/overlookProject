@@ -13,7 +13,7 @@
   </section>
   <section class="header-right">
     <h2>Book A Room</h2>
-    <label for="date-selection">Date:</label>
+    <label for="date-selection" class="hidden">Date:</label>
     <input type="date" id="date-selection" name="calendar"
        value=""
        min="" max="2030-12-31">
@@ -50,12 +50,18 @@
         <option value="junior suite">Junior Suite</option>
         <option value="single room">Single Room</option>
       </select>
-      <button class="filter-rooms">Filter Rooms</button>
+      <div class="room-search-display-buttons">
+        <button class="filter-rooms">Filter Rooms</button>
+        <button class="go-home-btn">Go Home</button>
+      </div>
     <div class="available-rooms scroll-availability">
       <button class="book-room-btn hidden"></button>
     </div>
-    <button class="go-home-btn">Go Home</button>
   </div>
+  </section>
+  <section class="room-is-booked-message hidden">
+    <h1>Congrats! Your room has been booked.</h1>
+    <button class="go-home-from-success">Go Home</button>
   </section>
 
 
