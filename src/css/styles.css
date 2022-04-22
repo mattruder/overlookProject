@@ -52,34 +52,41 @@ button, .go-home-btn {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  
+
 }
 
 .scroll {
   border: 2px solid black;
-  margin:4px, 4px;
+  margin: 4px, 4px;
   padding:4px;
   width: 500px;
   height: 400px;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align:justify;
+  text-align: justify;
 }
 
 .scroll-availability {
   border: 2px solid black;
-  margin:4px, 4px;
+  margin: 4px, 4px;
   padding:4px;
   width: 500px;
   height: 600px;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align:justify;
+  text-align: justify;
+}
+
+.past-bookings {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: baseline;
 }
 
 .future-bookings {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }

@@ -35,6 +35,7 @@ getData().then(data => {
   domUpdates.populateTotalSpentArea(customer)
   domUpdates.populateHeader(customer)
   domUpdates.displayPastBookings(customer, roomsData)
+  domUpdates.displayFutureBookings(customer, roomsData)
   domUpdates.setDateSelection()
   console.log("customer data ", customerData)
   console.log("rooms data ", roomsData)

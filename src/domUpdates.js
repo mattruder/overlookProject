@@ -8,6 +8,7 @@ const roomSearchDisplay = document.querySelector('.room-search-display')
 const mainDashboardBody = document.querySelector('.main-dashboard-body')
 const availableRoomsArea = document.querySelector('.available-rooms')
 const roomTypeDropdown = document.getElementById("room-type-dropdown")
+const futureBookingsArea = document.querySelector('.future-bookings')
 
 let domUpdates = {
 
@@ -31,7 +32,7 @@ let domUpdates = {
   displayPastBookings(customer, roomsData) {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     today = yyyy + '/' + mm + '/' + dd;
     let bookingArray = []
@@ -55,6 +56,47 @@ let domUpdates = {
     })
     bookingArraySorted.forEach((sortedBooking) => {
       pastBookings.innerHTML += `
+      <div class="booking">
+        <h3>Room ${sortedBooking.roomNumber} on ${sortedBooking.date.toDateString()}</h3>
+        <p>Room Type: ${sortedBooking.roomType}</p>
+        <p>Bed Size: ${sortedBooking.bedSize}</p>
+        <p>Beds: ${sortedBooking.numBeds}</p>
+        <p>Cost Per Night: $${sortedBooking.cost}</p>
+      </div>
+      `
+    })
+  },
+
+  displayFutureBookings(customer, roomsData) {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = yyyy + '/' + mm + '/' + dd;
+    let bookingArray = []
+    customer.bookings.forEach((booking) => {
+      roomsData.forEach((room) => {
+        if(booking.roomNumber === room.number && booking.date >= today) {
+          futureBookingsArea.style.alignItems = 'baseline';
+          futureBookingsArea.style.justifyContent = 'flex-start'
+          futureBookingsArea.innerHTML = ""
+          let bookingObject = {
+            roomNumber: room.number,
+            date: new Date(booking.date),
+            roomType: room.roomType,
+            bedSize: room.bedSize,
+            numBeds: room.numBeds,
+            cost: room.costPerNight
+          }
+          bookingArray.push(bookingObject)
+        }
+      })
+    })
+    let bookingArraySorted = bookingArray.slice().sort((a, b) => {
+      return a.date - b.date
+    })
+    bookingArraySorted.forEach((sortedBooking) => {
+      futureBookingsArea.innerHTML += `
       <div class="booking">
         <h3>Room ${sortedBooking.roomNumber} on ${sortedBooking.date.toDateString()}</h3>
         <p>Room Type: ${sortedBooking.roomType}</p>
