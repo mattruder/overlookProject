@@ -1,4 +1,7 @@
 import Customer from './classes/Customer'
+import customer from './scripts.js'
+import customerData from './scripts.js'
+import usernames from './usernames'
 const myBookingsArea = document.querySelector('.my-bookings-area')
 const totalSpentArea = document.querySelector('.total-spent-area')
 const headerLeft = document.querySelector('.header-left')
@@ -10,6 +13,14 @@ const availableRoomsArea = document.querySelector('.available-rooms')
 const roomTypeDropdown = document.getElementById("room-type-dropdown")
 const futureBookingsArea = document.querySelector('.future-bookings')
 const successMessageArea = document.querySelector('.room-is-booked-message')
+const userNameInput = document.querySelector('.user-id')
+const passwordInput = document.querySelector('.user-password')
+const loginError = document.querySelector('.login-error')
+const loginArea = document.querySelector('.login-area')
+const loginPage = document.querySelector('.login-page')
+const header = document.querySelector('.main-header')
+
+let customerIndexNum
 
 let domUpdates = {
 
@@ -222,8 +233,9 @@ let domUpdates = {
 
 
   goHome() {
-    this.removeHidden([mainDashboardBody]);
-    this.addHidden([roomSearchDisplay, successMessageArea])
+    this.removeHidden([mainDashboardBody, header]);
+    this.addHidden([roomSearchDisplay, successMessageArea, loginArea, loginPage])
+    loginPage.style.paddingTop = 0;
     this.setDateSelection()
   },
 
@@ -254,6 +266,32 @@ bookRoom(roomToBook) {
 displaySuccessMessage() {
   this.addHidden([roomSearchDisplay, mainDashboardBody])
   this.removeHidden([successMessageArea])
+},
+
+userLogin(customerData) {
+  let userName = userNameInput.value;
+  let password = passwordInput.value;
+  if(password !== 'overlook2021' || !usernames.includes(userName)) {
+    this.incorrectPassword();
+    setTimeout(this.resetPassword, 2000)
+  } else {
+    customerIndexNum = Number(userName.slice(8)) - 1
+  }
+},
+
+getCustomerIndex() {
+  return customerIndexNum
+},
+
+incorrectPassword() {
+  loginError.innerHTML += `
+  <p>Incorrect Username and/or Password</p>
+  `
+},
+
+resetPassword() {
+  loginError.innerHTML = ""
+  passwordInput.value = ""
 }
 
 }

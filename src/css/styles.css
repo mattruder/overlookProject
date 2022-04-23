@@ -130,3 +130,21 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200px;
+}
+
+.login-area > input {
+  background-color: #ffffff
+}
+
+.login-area {
+  border: 2px solid black;
+  padding: 10px;
+  
+}

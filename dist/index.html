@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook</title>
 </head>
-<header>
+<header class="main-header hidden">
   <section class="header-left">
     <h1>Overlook Hotel</h1>
 
@@ -21,7 +21,20 @@
   </section>
 </header>
 <body>
-  <section class="main-dashboard-body">
+  <section class="login-page">
+    <div class="login-area">
+    <h1>Welcome to Overlook Hotel</h1>
+    <h3>Please Enter Your Login Credentials</h3>
+    <input class="user-id" id="userId" type="text" placeholder="username">
+         <label for="userId" class="hidden">User ID Input</label>
+    <input class="user-password" id="userPassword" type="text" placeholder="password">
+         <label for="userPassword" class="hidden">Password Input</label>
+    <button class="login-button">Log In</button>
+    </div>
+    <div class="login-error">
+    </div>
+  </section>
+  <section class="main-dashboard-body hidden">
   <section class="total-spent-area">
 
   </section>
