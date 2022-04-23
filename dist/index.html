@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook</title>
 </head>
-<header>
+<header class="main-header hidden">
   <section class="header-left">
     <h1>Overlook Hotel</h1>
 
   </section>
   <section class="header-right">
     <h2>Book A Room</h2>
-    <label for="date-selection">Date:</label>
+    <label for="date-selection" class="hidden">Date:</label>
     <input type="date" id="date-selection" name="calendar"
        value=""
        min="" max="2030-12-31">
@@ -21,7 +21,20 @@
   </section>
 </header>
 <body>
-  <section class="main-dashboard-body">
+  <section class="login-page">
+    <div class="login-area">
+    <h1>Welcome to Overlook Hotel</h1>
+    <h3>Please Enter Your Login Credentials</h3>
+    <input class="user-id" id="userId" type="text" placeholder="username">
+         <label for="userId" class="hidden">User ID Input</label>
+    <input class="user-password" id="userPassword" type="text" placeholder="password">
+         <label for="userPassword" class="hidden">Password Input</label>
+    <button class="login-button">Log In</button>
+    </div>
+    <div class="login-error">
+    </div>
+  </section>
+  <section class="main-dashboard-body hidden">
   <section class="total-spent-area">
 
   </section>
@@ -50,12 +63,18 @@
         <option value="junior suite">Junior Suite</option>
         <option value="single room">Single Room</option>
       </select>
-      <button class="filter-rooms">Filter Rooms</button>
+      <div class="room-search-display-buttons">
+        <button class="filter-rooms">Filter Rooms</button>
+        <button class="go-home-btn">Go Home</button>
+      </div>
     <div class="available-rooms scroll-availability">
       <button class="book-room-btn hidden"></button>
     </div>
-    <button class="go-home-btn">Go Home</button>
   </div>
+  </section>
+  <section class="room-is-booked-message hidden">
+    <h1>Congrats! Your room has been booked.</h1>
+    <button class="go-home-from-success">Go Home</button>
   </section>
 
 

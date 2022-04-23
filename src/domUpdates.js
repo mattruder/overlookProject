@@ -1,4 +1,7 @@
 import Customer from './classes/Customer'
+import customer from './scripts.js'
+import customerData from './scripts.js'
+import usernames from './usernames'
 const myBookingsArea = document.querySelector('.my-bookings-area')
 const totalSpentArea = document.querySelector('.total-spent-area')
 const headerLeft = document.querySelector('.header-left')
@@ -9,6 +12,15 @@ const mainDashboardBody = document.querySelector('.main-dashboard-body')
 const availableRoomsArea = document.querySelector('.available-rooms')
 const roomTypeDropdown = document.getElementById("room-type-dropdown")
 const futureBookingsArea = document.querySelector('.future-bookings')
+const successMessageArea = document.querySelector('.room-is-booked-message')
+const userNameInput = document.querySelector('.user-id')
+const passwordInput = document.querySelector('.user-password')
+const loginError = document.querySelector('.login-error')
+const loginArea = document.querySelector('.login-area')
+const loginPage = document.querySelector('.login-page')
+const header = document.querySelector('.main-header')
+
+let customerIndexNum
 
 let domUpdates = {
 
@@ -63,6 +75,7 @@ let domUpdates = {
         <p>Bed Size: ${sortedBooking.bedSize}</p>
         <p>Beds: ${sortedBooking.numBeds}</p>
         <p>Cost Per Night: $${sortedBooking.cost}</p>
+        <hr style="width:100%", size="2", color=black>
       </div>
       `
     })
@@ -104,6 +117,7 @@ let domUpdates = {
         <p>Bed Size: ${sortedBooking.bedSize}</p>
         <p>Beds: ${sortedBooking.numBeds}</p>
         <p>Cost Per Night: $${sortedBooking.cost}</p>
+        <hr style="width:100%", size="2", color=black>
       </div>
       `
     })
@@ -120,15 +134,17 @@ let domUpdates = {
   },
 
   displayResultsArea() {
-    this.addHidden([mainDashboardBody]);
+    this.addHidden([mainDashboardBody, successMessageArea]);
     this.removeHidden([roomSearchDisplay])
   },
 
   displaySearchResults(roomsData, bookingsData) {
     availableRoomsArea.innerHTML = ''
+    let allAvailableRooms = []
     let searchDate = dateSelection.value.replaceAll('-', '/')
     roomsData.forEach((room) => {
       let roomInfoObject = {}
+
 
           let isBooked = bookingsData.find((booking) => {
             return booking.date === searchDate && booking.roomNumber === room.number
@@ -143,17 +159,27 @@ let domUpdates = {
           }
 
       if(roomInfoObject['roomNumber'] !== undefined) {
+      allAvailableRooms.push(roomInfoObject)
       availableRoomsArea.innerHTML += `
       <h3>Room ${roomInfoObject['roomNumber']}</h3>
       <p>Room Type: ${roomInfoObject['roomType']}</p>
       <p>Bed Size: ${roomInfoObject['bedSize']}</p>
       <p>Beds: ${roomInfoObject['numBeds']}</p>
-      <p>Cost Per Night: ${roomInfoObject['cost']}</p>
+      <p>Cost Per Night: $${roomInfoObject['cost']}</p>
       <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
+      <hr style="width:100%", size="2", color=black>
       `
       }
 
+
+
+
     })
+    if(allAvailableRooms.length === 0) {
+      availableRoomsArea.innerHTML += `
+      <h1>So Sorry! No rooms are available on this date. Please select another date</h1>
+      `
+    }
   },
 
   filterRooms(roomsData, bookingsData) {
@@ -207,8 +233,9 @@ let domUpdates = {
 
 
   goHome() {
-    this.removeHidden([mainDashboardBody]);
-    this.addHidden([roomSearchDisplay])
+    this.removeHidden([mainDashboardBody, header]);
+    this.addHidden([roomSearchDisplay, successMessageArea, loginArea, loginPage])
+    loginPage.style.paddingTop = 0;
     this.setDateSelection()
   },
 
@@ -234,6 +261,37 @@ bookRoom(roomToBook) {
     })
     .then(response => response.json())
     .catch(err => console.log('ERROR'))
+},
+
+displaySuccessMessage() {
+  this.addHidden([roomSearchDisplay, mainDashboardBody])
+  this.removeHidden([successMessageArea])
+},
+
+userLogin(customerData) {
+  let userName = userNameInput.value;
+  let password = passwordInput.value;
+  if(password !== 'overlook2021' || !usernames.includes(userName)) {
+    this.incorrectPassword();
+    setTimeout(this.resetPassword, 2000)
+  } else {
+    customerIndexNum = Number(userName.slice(8)) - 1
+  }
+},
+
+getCustomerIndex() {
+  return customerIndexNum
+},
+
+incorrectPassword() {
+  loginError.innerHTML += `
+  <p>Incorrect Username and/or Password</p>
+  `
+},
+
+resetPassword() {
+  loginError.innerHTML = ""
+  passwordInput.value = ""
 }
 
 }
