@@ -1,11 +1,6 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
 import apiCalls from './apiCalls'
 import getData from './apiCalls'
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Customer from './classes/Customer'
 import usernames from './usernames'
@@ -33,41 +28,29 @@ getData().then(data => {
   customerData = data[0].customers;
   roomsData = data[1].rooms;
   bookingsData = data[2].bookings;
-  // customer = new Customer(customerData[domUpdates.getRandomIndex(customerData)])
-  // customer.getBookings(bookingsData)
-  // customer.getRooms(roomsData)
-  // customer.getTotalSpent()
-  // domUpdates.populateTotalSpentArea(customer)
-  // domUpdates.populateHeader(customer)
-  // domUpdates.displayPastBookings(customer, roomsData)
-  // domUpdates.displayFutureBookings(customer, roomsData)
-  // domUpdates.setDateSelection()
-  console.log("customer data ", customerData)
-  console.log("rooms data ", roomsData)
-  console.log("bookings data ", bookingsData)
-  // console.log(customer)
 })
 
 loginButton.addEventListener("click", () => {
   domUpdates.userLogin(customerData)
   let customerIndex = domUpdates.getCustomerIndex()
-  domUpdates.goHome()
-  getData().then(data => {
-    roomsData = data[1].rooms;
-    bookingsData = data[2].bookings;
-    customer = new Customer(customerData[customerIndex])
-    customer.getBookings(bookingsData)
-    customer.getRooms(roomsData)
-    customer.getTotalSpent()
-    domUpdates.populateTotalSpentArea(customer)
-    domUpdates.displayPastBookings(customer, roomsData)
-    domUpdates.displayFutureBookings(customer, roomsData)
-    domUpdates.setDateSelection()
-    console.log("customer data ", customerData)
-    console.log("rooms data ", roomsData)
-    console.log("bookings data ", bookingsData)
-    console.log(customer)
-  })
+  if(domUpdates.validateUser() === true) {
+    domUpdates.goHome()
+    getData().then(data => {
+      roomsData = data[1].rooms;
+      bookingsData = data[2].bookings;
+      customer = new Customer(customerData[customerIndex])
+      customer.getBookings(bookingsData)
+      customer.getRooms(roomsData)
+      customer.getTotalSpent()
+      domUpdates.populateHeader(customer)
+      domUpdates.populateTotalSpentArea(customer)
+      domUpdates.displayPastBookings(customer, roomsData)
+      domUpdates.displayFutureBookings(customer, roomsData)
+      domUpdates.setDateSelection()
+    })
+
+  }
+
 })
 
 searchRoomsBtn.addEventListener("click", () => {
@@ -97,10 +80,6 @@ goHomeBtn.addEventListener("click", () => {
     domUpdates.displayPastBookings(customer, roomsData)
     domUpdates.displayFutureBookings(customer, roomsData)
     domUpdates.setDateSelection()
-    console.log("customer data ", customerData)
-    console.log("rooms data ", roomsData)
-    console.log("bookings data ", bookingsData)
-    console.log(customer)
   })
 
 })
@@ -126,9 +105,5 @@ goHomeFromSuccess.addEventListener("click", () => {
     domUpdates.displayPastBookings(customer, roomsData)
     domUpdates.displayFutureBookings(customer, roomsData)
     domUpdates.setDateSelection()
-    console.log("customer data ", customerData)
-    console.log("rooms data ", roomsData)
-    console.log("bookings data ", bookingsData)
-    console.log(customer)
   })
 })

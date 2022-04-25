@@ -3,7 +3,7 @@
 }
 
 body {
-background-color: #e1e1e1
+background: url("hotel.jpg");
 }
 
 header {
@@ -146,5 +146,12 @@ button:hover {
 .login-area {
   border: 2px solid black;
   padding: 10px;
-  
+
+}
+
+.success-message-styling {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

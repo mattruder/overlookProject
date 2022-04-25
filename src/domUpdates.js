@@ -19,8 +19,8 @@ const loginError = document.querySelector('.login-error')
 const loginArea = document.querySelector('.login-area')
 const loginPage = document.querySelector('.login-page')
 const header = document.querySelector('.main-header')
-
 let customerIndexNum
+let loginValidation
 
 let domUpdates = {
 
@@ -216,6 +216,7 @@ let domUpdates = {
       <p>Beds: ${roomInfoObject['numBeds']}</p>
       <p>Cost Per Night: ${roomInfoObject['cost']}</p>
       <button class="book-room-btn" id=${roomInfoObject['roomNumber']}>Book Room ${roomInfoObject['roomNumber']}</button>
+      <hr style="width:100%", size="2", color=black>
       `
     }
     })
@@ -251,7 +252,7 @@ let domUpdates = {
   })
 },
 
-bookRoom(roomToBook) {
+  bookRoom(roomToBook) {
     fetch(`http://localhost:3001/api/v1/bookings`, {
         method: 'POST',
         body: JSON.stringify(roomToBook),
@@ -263,46 +264,43 @@ bookRoom(roomToBook) {
     .catch(err => console.log('ERROR'))
 },
 
-displaySuccessMessage() {
-  this.addHidden([roomSearchDisplay, mainDashboardBody])
+  displaySuccessMessage() {
+  this.addHidden([roomSearchDisplay, mainDashboardBody, header])
   this.removeHidden([successMessageArea])
 },
 
-userLogin(customerData) {
+  userLogin(customerData) {
   let userName = userNameInput.value;
   let password = passwordInput.value;
   if(password !== 'overlook2021' || !usernames.includes(userName)) {
+    loginValidation = false;
     this.incorrectPassword();
     setTimeout(this.resetPassword, 2000)
   } else {
+    loginValidation = true;
     customerIndexNum = Number(userName.slice(8)) - 1
   }
 },
 
-getCustomerIndex() {
+  getCustomerIndex() {
   return customerIndexNum
 },
 
-incorrectPassword() {
+  validateUser() {
+  return loginValidation
+},
+
+  incorrectPassword() {
   loginError.innerHTML += `
   <p>Incorrect Username and/or Password</p>
   `
 },
 
-resetPassword() {
+  resetPassword() {
   loginError.innerHTML = ""
   passwordInput.value = ""
 }
 
 }
-
-
-
-
-
-
-
-
-
 
 export default domUpdates
