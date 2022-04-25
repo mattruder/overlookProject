@@ -20,6 +20,10 @@ header {
   font-size: 20px;
 }
 
+.login-error > p {
+  color: white;
+}
+
 .header-left > h1, .header-left > p   {
   color: 	#e1e1e1
 }
@@ -88,7 +92,8 @@ button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center
+  align-items: center;
+  padding-bottom: 5px;
 }
 
 .total-spent-area, .search-styling {
