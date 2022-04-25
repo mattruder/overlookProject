@@ -3,7 +3,7 @@
 }
 
 body {
-background: url("hotel.jpg");
+background-image: url("/hotel-bw.png");
 }
 
 header {
@@ -49,6 +49,14 @@ button, .go-home-btn {
 
 button:hover {
   background-color: lightgrey;
+}
+
+.my-bookings-area, .total-spent-area, .room-search-styling {
+  background-color: white;
+}
+
+.room-search-styling > label {
+  color: black;
 }
 
 
@@ -146,6 +154,7 @@ button:hover {
 .login-area {
   border: 2px solid black;
   padding: 10px;
+  background-color: white;
 
 }
 
