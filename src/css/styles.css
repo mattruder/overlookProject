@@ -16,6 +16,10 @@ header {
 
 }
 
+.login-area > h2 {
+  font-size: 20px;
+}
+
 .header-left > h1, .header-left > p   {
   color: 	#e1e1e1
 }
