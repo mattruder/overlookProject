@@ -9,11 +9,7 @@ and book rooms for the future.
 
 2. hit this green box that says `Code`
 
-![green box]()
-
 3. Copy the SSH
-
-![Copy SSH]()
 
 4. Open the terminal
 5. Type `git clone` + paste the SSH link
