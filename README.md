@@ -21,6 +21,7 @@ and book rooms for the future.
 
 ### **To Run the Application and View the Webpage**
 
+
 1. In the main-directory, run `npm start`
 
 You should see a similar screen below.
@@ -31,8 +32,8 @@ You should see a similar screen below.
 
 ![View Website](https://user-images.githubusercontent.com/89413678/161453609-03cf671a-359b-4668-af50-85df2e7f1f25.png)
 
+![application-gif](https://user-images.githubusercontent.com/36666973/165350930-fe6664d3-1dc9-46c2-9a7f-47f350d251e3.gif)
 
-![Apr-18-2022 17-27-32](https://user-images.githubusercontent.com/89413678/163892630-60d1c7bb-6f59-47cd-92b7-3c46845be6e2.gif)
 
 
 ### **Using the Application**
