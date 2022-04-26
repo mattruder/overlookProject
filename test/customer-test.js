@@ -34,7 +34,7 @@ describe ('Customer', () => {
                 number: 22,
                 roomType: "single room"}
             ]
-    customer = new Customer(customerInfo, customerBookings);
+    customer = new Customer(customerInfo);
   })
 
   it('Should be a function', () => {
@@ -49,16 +49,21 @@ describe ('Customer', () => {
       });
 
   it('Should store the customers bookings', () => {
-        expect(customer.bookings).to.equal(customerBookings);
+        customer.getBookings(customerBookings)
+        expect(customer.bookings).to.deep.equal(customerBookings);
       });
 
   it('Should be able to display the total amount the customer has spent', () => {
-        expect(customer.getTotalSpent(rooms)).to.equal(866.35);
+        customer.getBookings(customerBookings)
+        customer.getRooms(rooms)
+        expect(customer.getTotalSpent()).to.equal(866.35);
       });
 
-  // it('Should be able to book a room', () => {
-  //       expect(customer.getTotalSpent(rooms)).to.equal(866.35);
-  //     });
+  it('Should store the customers rooms', () => {
+        customer.getBookings(customerBookings)
+        customer.getRooms(rooms)
+        expect(customer.rooms).to.deep.equal(rooms)
+  })
 
 
 

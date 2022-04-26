@@ -12,9 +12,7 @@ class Customer {
     this.rooms.forEach((room) => {
       this.totalSpent += room.costPerNight;
     })
-
     this.totalSpent = Number(this.totalSpent.toFixed(2))
-
     return this.totalSpent
   }
 
