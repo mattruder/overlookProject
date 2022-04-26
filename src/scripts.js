@@ -48,9 +48,7 @@ loginButton.addEventListener("click", () => {
       domUpdates.displayFutureBookings(customer, roomsData)
       domUpdates.setDateSelection()
     })
-
   }
-
 })
 
 searchRoomsBtn.addEventListener("click", () => {

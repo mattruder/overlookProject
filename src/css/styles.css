@@ -7,17 +7,20 @@ background-image: url("/hotel-bw.png");
 }
 
 header {
+  background-color: #232b2b;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #232b2b;
   margin: 0;
   width: 100%;
-
 }
 
 .login-area > h2 {
   font-size: 20px;
+}
+
+.login-error > p {
+  color: white;
 }
 
 .header-left > h1, .header-left > p   {
@@ -47,8 +50,8 @@ input {
 }
 
 button, .go-home-btn {
-  cursor: pointer;
   background-color: white;
+  cursor: pointer;
 }
 
 button:hover {
@@ -70,9 +73,9 @@ button:hover {
 }
 
 .header-right {
+  align-items: center;
   display: flex;
   flex-direction:row;
-  align-items: center;
   justify-content: space-around;
 }
 
@@ -85,68 +88,61 @@ button:hover {
 }
 
 .my-bookings-area {
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center
+  padding-bottom: 5px;
 }
 
-.total-spent-area, .search-styling {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center
-
+.total-spent-area, .search-styling,
+.future-bookings, .success-message-styling {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .room-search-styling {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
 
 }
 
 .scroll {
   border: 2px solid black;
-  margin: 4px, 4px;
-  padding:4px;
-  width: 500px;
   height: 400px;
+  margin: 4px, 4px;
   overflow-x: hidden;
   overflow-y: auto;
+  padding:4px;
   text-align: justify;
+  width: 500px;
 }
 
 .scroll-availability {
   border: 2px solid black;
-  margin: 4px, 4px;
-  padding:4px;
-  width: 500px;
   height: 550px;
+  margin: 4px, 4px;
   overflow-x: hidden;
   overflow-y: auto;
+  padding:4px;
   text-align: justify;
+  width: 500px;
 }
 
 .past-bookings {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
   align-items: baseline;
-}
-
-.future-bookings {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .login-page {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   padding-top: 200px;
 }
@@ -156,15 +152,7 @@ button:hover {
 }
 
 .login-area {
+  background-color: white;
   border: 2px solid black;
   padding: 10px;
-  background-color: white;
-
-}
-
-.success-message-styling {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
